@@ -1,0 +1,25 @@
+#include <iostream>
+class Liczba {
+private:
+    int liczba;
+
+public:
+    Liczba(int i) : liczba(i) {}
+    int GetLiczba() { return liczba; }
+    int Dodaj(int b) { return liczba + b; }
+};
+
+int main() {
+    Liczba liczba1(5);
+    Liczba *liczba2 = new Liczba(10);
+
+    std::cout << "Liczba1: " << liczba1.GetLiczba() << std::endl;
+    std::cout << "Liczba1 po dodaniu 3: " << liczba1.Dodaj(3) << std::endl;
+
+    std::cout << "Liczba2: " << liczba2->GetLiczba() << std::endl;
+    std::cout << "Liczba2 po dodaniu 3: " << liczba2->Dodaj(3) << std::endl;
+
+    delete liczba2;
+
+    return 0;
+}
