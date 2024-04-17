@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+
+class Lek {
+protected:
+    std::string nazwa;
+    double cena;
+    int naStanie;
+
+public:
+    Lek(std::string nazwa, double cena, int naStanie) : nazwa(nazwa), cena(cena), naStanie(naStanie) {}
+    Lek() : cena(0), naStanie(0) {}
+
+    void UstawCene(double nowaCena) {
+        cena = nowaCena;
+    }
+
+    int IleNaStanie() {
+        return naStanie;
+    }
+
+    double ZwrocCene() {
+        return cena;
+    }
+
+    void Sprzedaj(int ilosc) {
+        if (ilosc <= naStanie) {
+            naStanie -= ilosc;
+        } else {
+            std::cout << "Nie ma wystarczającej ilości leku na stanie!" << std::endl;
+        }
+    }
+
+    void Dokup(int ilosc) {
+        naStanie += ilosc;
+    }
+
+    void Wyswietl() {
+        std::cout << "Nazwa leku: " << nazwa << std::endl;
+        std::cout << "Cena: " << cena << std::endl;
+        std::cout << "Ilość na stanie: " << naStanie << std::endl;
+    }
+
+    ~Lek() {}
+};
+
+class LekRefundowany : public Lek {
+protected:
+    double cenaRef;
+
+public:
+    LekRefundowany(std::string nazwa, double cena, int naStanie, double cenaRef) : Lek(nazwa, cena, naStanie), cenaRef(cenaRef) {}
+
+    void Wyswietl() {
+        Lek::Wyswietl();
+        std::cout << "Cena refundowana: " << cenaRef << std::endl;
+    }
+
+    double ZwrocCeneRef() {
+        return cenaRef;
+    }
+
+    void ZmienCeneRef(double nowaCenaRef) {
+        if (nowaCenaRef <= cena)
+            cenaRef = nowaCenaRef;
+        else
+            std::cout << "Cena refundowana nie może być większa niż cena podstawowa!" << std::endl;
+    }
+
+    ~LekRefundowany() {}
+};
+
+int main() {
+    LekRefundowany lekRef("Paracetamol", 10.5, 50, 8.0);
+    lekRef.Wyswietl();
+    std::cout << "Cena leku refundowanego z punktu a): " << lekRef.ZwrocCeneRef() << std::endl;
+
+    LekRefundowany* lekPtr = new LekRefundowany("Ibuprofen", 15.75, 30, 12.0);
+    lekPtr->Wyswietl();
+    std::cout << "Cena leku refundowanego z punktu b): " << lekPtr->ZwrocCeneRef() << std::endl;
+
+    delete lekPtr;
+
+    return 0;
+}
