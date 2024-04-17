@@ -1,0 +1,46 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+class Wektor3D {
+private:
+    double x, y, z;
+
+public:
+    Wektor3D() : x(1.0), y(0.0), z(0.0) {}
+    Wektor3D(double x_wart, double y_wart, double z_wart) : x(x_wart), y(y_wart), z(z_wart) {}
+    Wektor3D(double wartosc) : x(wartosc), y(wartosc), z(wartosc) {}
+
+    bool czyJednostkowy() const {
+        double dlugosc = sqrt(x*2 + y*2 + z*2);
+        return abs(dlugosc - 1.0) < 1e-10;
+    }
+
+    Wektor3D operator+(const Wektor3D& inny) const {
+        return Wektor3D(x + inny.x, y + inny.y, z + inny.z);
+    }
+
+    void wypisz() const {
+        cout << "[" << x << "," << y << "," << z << "]" << endl;
+    }
+};
+
+int main() {
+    Wektor3D v1;
+    v1.wypisz();
+    cout << "Czy v1 jest wektorem jednostkowym? " << (v1.czyJednostkowy() ? "Tak" : "Nie") << endl;
+
+    Wektor3D v2(2.0, 3.0, 4.0);
+    v2.wypisz();
+    cout << "Czy v2 jest wektorem jednostkowym? " << (v2.czyJednostkowy() ? "Tak" : "Nie") << endl;
+
+    Wektor3D v3(5.0);
+    v3.wypisz();
+    cout << "Czy v3 jest wektorem jednostkowym? " << (v3.czyJednostkowy() ? "Tak" : "Nie") << endl;
+
+    Wektor3D suma = v1 + v2;
+    suma.wypisz();
+
+    return 0;
+}
